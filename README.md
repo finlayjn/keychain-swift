@@ -50,11 +50,11 @@ There are four ways you can add KeychainSwift to your project.
 
 #### Add source (iOS 7+)
 
-Simply add [KeychainSwiftDistrib.swift](https://github.com/evgenyneu/keychain-swift/blob/master/Distrib/KeychainSwiftDistrib.swift) file into your Xcode project.
+Simply add [KeychainSwiftDistrib.swift](https://github.com/finlayjn/keychain-swift/blob/master/Distrib/KeychainSwiftDistrib.swift) file into your Xcode project.
 
 #### Setup with Carthage (iOS 8+)
 
-Alternatively, add `github "evgenyneu/keychain-swift" ~> 24.0` to your Cartfile and run `carthage update`.
+Alternatively, add `github "finlayjn/keychain-swift" ~> 24.0` to your Cartfile and run `carthage update`.
 
 #### Setup with CocoaPods (iOS 8+)
 
@@ -70,14 +70,14 @@ pod 'KeychainSwift', '~> 24.0'
 #### Setup with Swift Package Manager (in project)
 
 * In Xcode select *File > Add Packages*.
-* Enter this project's URL: https://github.com/evgenyneu/keychain-swift.git
+* Enter this project's URL: https://github.com/finlayjn/keychain-swift.git
 
 #### Setup with Swift Package Manager (in Swift Package)
 
 If you're using KeychainSwift in a Swift package, make sure to specify a `name`. This is because SPM cannot automatically resolve a name for a package that has a different Target name in its `Package.swift` (namely `KeychainSwift`) that differs from the repo link (`keychain-swift`).
 
 ```
-.package(name: "KeychainSwift", url: "https://github.com/evgenyneu/keychain-swift.git", from: "24.0.0")
+.package(name: "KeychainSwift", url: "https://github.com/finlayjn/keychain-swift.git", from: "24.0.0")
 ```
 
 ## Legacy Swift versions
@@ -142,7 +142,7 @@ try keychain.set("Hello world", forKey: "key 1", withAccess: .accessibleWhenUnlo
 
 You can use `.accessibleAfterFirstUnlock` if you need your app to access the keychain item while in the background. Note that it is less secure than the `.accessibleWhenUnlocked` option.
 
-See the list of all available [access options](https://github.com/evgenyneu/keychain-swift/blob/master/Sources/KeychainSwiftAccessOptions.swift).
+See the list of all available [access options](https://github.com/finlayjn/keychain-swift/blob/master/Sources/KeychainSwiftAccessOptions.swift).
 
 
 <h3 id="keychain_access_control">Restricting access with biometrics or passcode</h3>
@@ -345,7 +345,7 @@ Thanks to Alex Nagy from [rebeloper.com](https://rebeloper.com/) for creating th
 
 ## Demo app
 
-<img src="https://raw.githubusercontent.com/evgenyneu/keychain-swift/master/graphics/keychain-swift-demo-3.png" alt="Keychain Swift demo app" width="320">
+<img src="https://raw.githubusercontent.com/finlayjn/keychain-swift/master/graphics/keychain-swift-demo-3.png" alt="Keychain Swift demo app" width="320">
 
 ## Alternative solutions
 

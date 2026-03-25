@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name        = "KeychainSwift"
   s.version     = "24.0.0"
   s.license     = { :type => "MIT" }
-  s.homepage    = "https://github.com/evgenyneu/keychain-swift"
+  s.homepage    = "https://github.com/finlayjn/keychain-swift"
   s.summary     = "A library for saving text and data in the Keychain with Swift."
   s.description = <<-DESC
                 This is a collection of helper functions for saving text and data in the Keychain.
@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
                 * Limit operations to a specific access group.
                 DESC
   s.authors     = { "Evgenii Neumerzhitckii" => "sausageskin@gmail.com" }
-  s.source      = { :git => "https://github.com/evgenyneu/keychain-swift.git", :tag => s.version }
-  s.screenshots  = "https://raw.githubusercontent.com/evgenyneu/keychain-swift/master/graphics/keychain-swift-demo-3.png"
+  s.source      = { :git => "https://github.com/finlayjn/keychain-swift.git", :tag => s.version }
+  s.screenshots  = "https://raw.githubusercontent.com/finlayjn/keychain-swift/master/graphics/keychain-swift-demo-3.png"
   s.source_files = "Sources/*.swift"
   s.resource_bundles = {"KeychainSwift" => ["Sources/PrivacyInfo.xcprivacy"]}
   s.ios.deployment_target = "12.0"
