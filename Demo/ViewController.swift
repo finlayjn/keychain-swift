@@ -11,8 +11,8 @@ class ViewController: UIViewController {
   
   @IBOutlet weak var synchronizableSwitch: UISwitch!
   
-  var keychain: KeychainSwift {
-    KeychainSwift(synchronizable: synchronizableSwitch.isOn)
+  private var keychain: KeychainSwift {
+    KeychainSwift(synchronizable: synchronizableSwitch?.isOn ?? false)
   }
   
   override func viewDidLoad() {
