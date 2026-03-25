@@ -1,5 +1,19 @@
 # KeychainSwift version history
 
+## 25.0.0 (2026-03-25)
+
+* Added biometric and passcode access control support via `SecAccessControl` APIs.
+* Added `withAccessControl` parameter to all `set` methods with five presets: `.biometricCurrentSet()`, `.biometricAny()`, `.biometricOrPasscode()`, `.devicePasscode()`, `.userPresence()`.
+* Added `authenticationPrompt` and `authenticationContext` parameters to all `get` methods.
+* Added async wrappers: `getAsync`, `getDataAsync`, `getBoolAsync`.
+* Added `KeychainSwiftAccessControl` type with `Sendable` conformance.
+* Added `KeychainError.userCanceled`, `.authFailed`, `.interactionNotAllowed` constants.
+* Added `Equatable` conformance to `KeychainError`.
+* **Breaking:** `set`, `get`, `getData`, `getBool`, `delete`, `clear` now `throw` instead of returning `Bool`.
+* **Breaking:** `accessGroup` and `synchronizable` are now read-only, set via `init(keyPrefix:accessGroup:synchronizable:)`.
+* **Breaking:** `lastResultCode` has been removed. Errors are surfaced as thrown `KeychainError` values.
+* `KeychainSwift` conforms to `@unchecked Sendable` for Swift 6 concurrency.
+
 ## 24.0.0 (2024-05-26)
 
 Added privacy manifest as a resource bundle to CocoaPods Podspec file.
