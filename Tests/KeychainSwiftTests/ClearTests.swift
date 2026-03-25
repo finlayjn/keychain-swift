@@ -12,13 +12,13 @@ class ClearTests: XCTestCase {
   }
   
   func testClear() {
-    obj.set("hello :)", forKey: "key 1")
-    obj.set("hello two", forKey: "key 2")
+    try? obj.set("hello :)", forKey: "key 1")
+    try? obj.set("hello two", forKey: "key 2")
     
-    obj.clear()
+    try? obj.clear()
     
-    XCTAssert(obj.get("key 1") == nil)
-    XCTAssert(obj.get("key 2") == nil)
+    XCTAssert(try obj.get("key 1") == nil)
+    XCTAssert(try obj.get("key 2") == nil)
   }
 }
 
