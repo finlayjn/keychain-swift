@@ -39,7 +39,25 @@ public struct KeychainSwiftConstants {
     
   /// A value that corresponds to matching an unlimited number of items
   public static var secMatchLimitAll : String { return toString(kSecMatchLimitAll) }
-    
+
+  // MARK: - Access Control
+
+  /// Specifies a `SecAccessControl` object that governs access to the keychain item,
+  /// including biometric, passcode, or user presence requirements.
+  /// Mutually exclusive with `accessible` (`kSecAttrAccessible`).
+  public static var accessControl: String { return toString(kSecAttrAccessControl) }
+
+  /// A string displayed in the system authentication prompt (Face ID / Touch ID / passcode)
+  /// when reading an access-controlled keychain item. Pass this in the query dictionary
+  /// to customize the reason shown to the user.
+  public static var useOperationPrompt: String { return toString(kSecUseOperationPrompt) }
+
+  /// An `LAContext` object used to authenticate access to keychain items.
+  /// Passing a pre-authenticated `LAContext` allows reusing a single authentication
+  /// for multiple keychain reads within the context's validity window, avoiding
+  /// repeated biometric prompts.
+  public static var useAuthenticationContext: String { return toString(kSecUseAuthenticationContext) }
+
   static func toString(_ value: CFString) -> String {
     return value as String
   }

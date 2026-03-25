@@ -49,6 +49,22 @@
 		7ED6C9BF1B1C13AA00FE8090 /* KeychainSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED6C96C1B1C118F00FE8090 /* KeychainSwift.framework */; };
 		7ED6C9C01B1C13AA00FE8090 /* KeychainSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED6C96C1B1C118F00FE8090 /* KeychainSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EE5B9A11E32F6D400AA56FF /* KeychainSwiftCBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE5B9A01E32F6D400AA56FF /* KeychainSwiftCBridge.swift */; };
+		85C7A46A2F745D25000E4121 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4682F745D25000E4121 /* KeychainError.swift */; };
+		85C7A46B2F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4692F745D25000E4121 /* KeychainSwiftAccessControl.swift */; };
+		85C7A46C2F745D25000E4121 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4682F745D25000E4121 /* KeychainError.swift */; };
+		85C7A46D2F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4692F745D25000E4121 /* KeychainSwiftAccessControl.swift */; };
+		85C7A46E2F745D25000E4121 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4682F745D25000E4121 /* KeychainError.swift */; };
+		85C7A46F2F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4692F745D25000E4121 /* KeychainSwiftAccessControl.swift */; };
+		85C7A4702F745D25000E4121 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4682F745D25000E4121 /* KeychainError.swift */; };
+		85C7A4712F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4692F745D25000E4121 /* KeychainSwiftAccessControl.swift */; };
+		85C7A4722F745D25000E4121 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4682F745D25000E4121 /* KeychainError.swift */; };
+		85C7A4732F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4692F745D25000E4121 /* KeychainSwiftAccessControl.swift */; };
+		85C7A4752F745E97000E4121 /* AccessControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4742F745E97000E4121 /* AccessControlTests.swift */; };
+		85C7A4762F745E97000E4121 /* AccessControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4742F745E97000E4121 /* AccessControlTests.swift */; };
+		85C7A4782F745EBE000E4121 /* TestableKeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4772F745EBE000E4121 /* TestableKeychainSwift.swift */; };
+		85C7A4792F745EBE000E4121 /* TestableKeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A4772F745EBE000E4121 /* TestableKeychainSwift.swift */; };
+		85C7A47B2F7462FD000E4121 /* BiometricIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A47A2F7462FD000E4121 /* BiometricIntegrationTests.swift */; };
+		85C7A47C2F7462FD000E4121 /* BiometricIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7A47A2F7462FD000E4121 /* BiometricIntegrationTests.swift */; };
 		C7E1DE4C1E4B7C9F003818F6 /* ConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E1DE4A1E4B7C9F003818F6 /* ConcurrencyTests.swift */; };
 		F271A1AE23BE071800FCC3B9 /* AllKeysTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271A1AD23BE071800FCC3B9 /* AllKeysTests.swift */; };
 		F271A1AF23BE082500FCC3B9 /* AllKeysTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F271A1AD23BE071800FCC3B9 /* AllKeysTests.swift */; };
@@ -157,6 +173,11 @@
 		7ED6C9C61B1C16BC00FE8090 /* concatenate_swift_files.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = concatenate_swift_files.sh; sourceTree = "<group>"; };
 		7ED6C9C91B1C16EE00FE8090 /* KeychainSwiftDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftDistrib.swift; sourceTree = "<group>"; };
 		7EE5B9A01E32F6D400AA56FF /* KeychainSwiftCBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftCBridge.swift; sourceTree = "<group>"; };
+		85C7A4682F745D25000E4121 /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
+		85C7A4692F745D25000E4121 /* KeychainSwiftAccessControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainSwiftAccessControl.swift; sourceTree = "<group>"; };
+		85C7A4742F745E97000E4121 /* AccessControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessControlTests.swift; sourceTree = "<group>"; };
+		85C7A4772F745EBE000E4121 /* TestableKeychainSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableKeychainSwift.swift; sourceTree = "<group>"; };
+		85C7A47A2F7462FD000E4121 /* BiometricIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricIntegrationTests.swift; sourceTree = "<group>"; };
 		C7E1DE4A1E4B7C9F003818F6 /* ConcurrencyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrencyTests.swift; sourceTree = "<group>"; };
 		F271A1AD23BE071800FCC3B9 /* AllKeysTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllKeysTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -229,6 +250,9 @@
 			children = (
 				508566911FA34EB1004208ED /* AccessGroupTests.swift */,
 				508566921FA34EB1004208ED /* ClearTests.swift */,
+				85C7A4742F745E97000E4121 /* AccessControlTests.swift */,
+				85C7A4772F745EBE000E4121 /* TestableKeychainSwift.swift */,
+				85C7A47A2F7462FD000E4121 /* BiometricIntegrationTests.swift */,
 				C7E1DE4A1E4B7C9F003818F6 /* ConcurrencyTests.swift */,
 				508566931FA34EB1004208ED /* Info.plist */,
 				508566941FA34EB1004208ED /* KeychainSwiftPrefixedTests.swift */,
@@ -296,6 +320,8 @@
 			isa = PBXGroup;
 			children = (
 				7ED6C98D1B1C128100FE8090 /* KeychainSwift.swift */,
+				85C7A4682F745D25000E4121 /* KeychainError.swift */,
+				85C7A4692F745D25000E4121 /* KeychainSwiftAccessControl.swift */,
 				7ED6C98E1B1C128100FE8090 /* KeychainSwiftAccessOptions.swift */,
 				7ED6C98F1B1C128100FE8090 /* TegKeychainConstants.swift */,
 				7ED6C9711B1C118F00FE8090 /* KeychainSwift.h */,
@@ -613,12 +639,14 @@
 					};
 					7ED6C9761B1C118F00FE8090 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 7YU2NJ97TW;
 						LastSwiftMigration = 1020;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 7ED6C99C1B1C133500FE8090;
 					};
 					7ED6C99C1B1C133500FE8090 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 7YU2NJ97TW;
 						LastSwiftMigration = 1020;
 					};
 				};
@@ -720,6 +748,8 @@
 			files = (
 				232B4C821BC2995D001F2B7A /* KeychainSwift.swift in Sources */,
 				232B4C831BC2995D001F2B7A /* KeychainSwiftAccessOptions.swift in Sources */,
+				85C7A4702F745D25000E4121 /* KeychainError.swift in Sources */,
+				85C7A4712F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */,
 				232B4C841BC2995D001F2B7A /* TegKeychainConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -730,6 +760,8 @@
 			files = (
 				232B4C921BC29991001F2B7A /* KeychainSwift.swift in Sources */,
 				232B4C931BC29991001F2B7A /* KeychainSwiftAccessOptions.swift in Sources */,
+				85C7A46E2F745D25000E4121 /* KeychainError.swift in Sources */,
+				85C7A46F2F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */,
 				232B4C941BC29991001F2B7A /* TegKeychainConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -740,6 +772,8 @@
 			files = (
 				23E785681BDA415000B7564A /* KeychainSwift.swift in Sources */,
 				23E785691BDA415000B7564A /* KeychainSwiftAccessOptions.swift in Sources */,
+				85C7A46C2F745D25000E4121 /* KeychainError.swift in Sources */,
+				85C7A46D2F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */,
 				23E7856A1BDA415000B7564A /* TegKeychainConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -749,7 +783,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				508566AA1FA34EB1004208ED /* SynchronizableTests.swift in Sources */,
+				85C7A4752F745E97000E4121 /* AccessControlTests.swift in Sources */,
+				85C7A47C2F7462FD000E4121 /* BiometricIntegrationTests.swift in Sources */,
 				F271A1AF23BE082500FCC3B9 /* AllKeysTests.swift in Sources */,
+				85C7A4782F745EBE000E4121 /* TestableKeychainSwift.swift in Sources */,
 				508566A41FA34EB1004208ED /* KeychainSwiftTests.swift in Sources */,
 				508566A21FA34EB1004208ED /* KeychainSwiftPrefixedTests.swift in Sources */,
 				508566A81FA34EB1004208ED /* macOS_Tests.swift in Sources */,
@@ -772,6 +809,8 @@
 			files = (
 				7ED6C9911B1C128100FE8090 /* KeychainSwiftAccessOptions.swift in Sources */,
 				7ED6C9901B1C128100FE8090 /* KeychainSwift.swift in Sources */,
+				85C7A46A2F745D25000E4121 /* KeychainError.swift in Sources */,
+				85C7A46B2F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */,
 				7ED6C9921B1C128100FE8090 /* TegKeychainConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -781,16 +820,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				508566A11FA34EB1004208ED /* KeychainSwiftPrefixedTests.swift in Sources */,
+				85C7A4762F745E97000E4121 /* AccessControlTests.swift in Sources */,
 				508566A71FA34EB1004208ED /* macOS_Tests.swift in Sources */,
 				7ED6C9971B1C12B300FE8090 /* KeychainSwiftAccessOptions.swift in Sources */,
+				85C7A4792F745EBE000E4121 /* TestableKeychainSwift.swift in Sources */,
 				C7E1DE4C1E4B7C9F003818F6 /* ConcurrencyTests.swift in Sources */,
 				7ED6C9961B1C12B100FE8090 /* KeychainSwift.swift in Sources */,
 				508566A91FA34EB1004208ED /* SynchronizableTests.swift in Sources */,
+				85C7A4722F745D25000E4121 /* KeychainError.swift in Sources */,
+				85C7A4732F745D25000E4121 /* KeychainSwiftAccessControl.swift in Sources */,
 				5085669B1FA34EB1004208ED /* AccessGroupTests.swift in Sources */,
 				7ED6C9981B1C12B500FE8090 /* TegKeychainConstants.swift in Sources */,
 				5085669D1FA34EB1004208ED /* ClearTests.swift in Sources */,
 				F271A1AE23BE071800FCC3B9 /* AllKeysTests.swift in Sources */,
 				508566A31FA34EB1004208ED /* KeychainSwiftTests.swift in Sources */,
+				85C7A47B2F7462FD000E4121 /* BiometricIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1273,6 +1317,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7YU2NJ97TW;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1280,8 +1327,9 @@
 				);
 				INFOPLIST_FILE = Tests/KeychainSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.marketplacer.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.FinlayNathan.KeychainSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/KeychainSwiftTests/KeychainSwiftTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1293,11 +1341,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7YU2NJ97TW;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Tests/KeychainSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.marketplacer.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.FinlayNathan.KeychainSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/KeychainSwiftTests/KeychainSwiftTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
@@ -1309,13 +1361,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7YU2NJ97TW;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.marketplacer.KeychainSwiftDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.FinlayNathan.KeychainSwiftDemo;
 				PRODUCT_NAME = "Keychain Swift";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1325,9 +1378,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7YU2NJ97TW;
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.marketplacer.KeychainSwiftDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.FinlayNathan.KeychainSwiftDemo;
 				PRODUCT_NAME = "Keychain Swift";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;

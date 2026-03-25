@@ -57,7 +57,29 @@ public enum KeychainSwiftAccessOptions: Sendable {
   static var defaultOption: KeychainSwiftAccessOptions {
     return .accessibleWhenUnlocked
   }
-  
+
+  /// Returns the corresponding `CFString` constant for use with `SecAccessControlCreateWithFlags`.
+  /// Unlike `value` (which returns a `String`), this returns the original `CFString` type
+  /// needed as the `protection` parameter.
+  var cfValue: CFString {
+    switch self {
+    case .accessibleWhenUnlocked:
+      return kSecAttrAccessibleWhenUnlocked
+
+    case .accessibleWhenUnlockedThisDeviceOnly:
+      return kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+
+    case .accessibleAfterFirstUnlock:
+      return kSecAttrAccessibleAfterFirstUnlock
+
+    case .accessibleAfterFirstUnlockThisDeviceOnly:
+      return kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+
+    case .accessibleWhenPasscodeSetThisDeviceOnly:
+      return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+    }
+  }
+
   var value: String {
     switch self {
     case .accessibleWhenUnlocked:

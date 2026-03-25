@@ -54,14 +54,20 @@ open class KeychainSwift: @unchecked Sendable {
   
   - parameter key: Key under which the text value is stored in the keychain.
   - parameter value: Text string to be written to the keychain.
-  - parameter withAccess: Value that indicates when your app needs access to the text in the keychain item. By default the .AccessibleWhenUnlocked option is used that permits the data to be accessed only while the device is unlocked by the user.
+  - parameter withAccess: Value that indicates when your app needs access to the text in the keychain item.
+    By default the `.accessibleWhenUnlocked` option is used that permits the data to be accessed only
+    while the device is unlocked by the user. Mutually exclusive with `withAccessControl`.
+  - parameter withAccessControl: Access control configuration requiring user authentication
+    (e.g., biometrics or passcode) to read the item. Mutually exclusive with `withAccess`.
+    When provided, `kSecAttrAccessControl` is used instead of `kSecAttrAccessible`.
 
   */
   open func set(_ value: String, forKey key: String,
-                  withAccess access: KeychainSwiftAccessOptions? = nil) throws {
+                  withAccess access: KeychainSwiftAccessOptions? = nil,
+                  withAccessControl accessControl: KeychainSwiftAccessControl? = nil) throws {
     
     if let value = value.data(using: String.Encoding.utf8) {
-      try set(value, forKey: key, withAccess: access)
+      try set(value, forKey: key, withAccess: access, withAccessControl: accessControl)
     } else {
       throw KeychainError(errSecInvalidEncoding)
     }
@@ -73,11 +79,31 @@ open class KeychainSwift: @unchecked Sendable {
   
   - parameter key: Key under which the data is stored in the keychain.
   - parameter value: Data to be written to the keychain.
-  - parameter withAccess: Value that indicates when your app needs access to the text in the keychain item. By default the .AccessibleWhenUnlocked option is used that permits the data to be accessed only while the device is unlocked by the user.
+  - parameter withAccess: Value that indicates when your app needs access to the text in the keychain item.
+    By default the `.accessibleWhenUnlocked` option is used that permits the data to be accessed only
+    while the device is unlocked by the user. Mutually exclusive with `withAccessControl`.
+  - parameter withAccessControl: Access control configuration requiring user authentication
+    (e.g., biometrics or passcode) to read the item. Mutually exclusive with `withAccess`.
+    When provided, `kSecAttrAccessControl` is used instead of `kSecAttrAccessible`.
+  
+  - Important: Access-controlled items cannot be synchronized via iCloud Keychain.
+    Setting `synchronizable = true` with `withAccessControl` will throw an error.
   
   */
   open func set(_ value: Data, forKey key: String,
-    withAccess access: KeychainSwiftAccessOptions? = nil) throws {
+    withAccess access: KeychainSwiftAccessOptions? = nil,
+    withAccessControl accessControl: KeychainSwiftAccessControl? = nil) throws {
+    
+    // Validate: withAccess and withAccessControl are mutually exclusive.
+    // kSecAttrAccessible and kSecAttrAccessControl cannot coexist in the same query.
+    if access != nil && accessControl != nil {
+      throw KeychainError(errSecParam)
+    }
+    
+    // Validate: access-controlled items are device-bound and cannot sync via iCloud Keychain.
+    if accessControl != nil && synchronizable {
+      throw KeychainError(errSecParam)
+    }
     
     // The lock prevents the code to be run simultaneously
     // from multiple threads which may result in crashing
@@ -86,16 +112,23 @@ open class KeychainSwift: @unchecked Sendable {
     
     try deleteNoLock(key) // Delete any existing key before saving it
 
-    let accessible = access?.value ?? KeychainSwiftAccessOptions.defaultOption.value
-      
     let prefixedKey = keyWithPrefix(key)
       
     var query: [String : Any] = [
       KeychainSwiftConstants.klass       : kSecClassGenericPassword,
       KeychainSwiftConstants.attrAccount : prefixedKey,
-      KeychainSwiftConstants.valueData   : value,
-      KeychainSwiftConstants.accessible  : accessible
+      KeychainSwiftConstants.valueData   : value
     ]
+
+    // Use access control (biometric/passcode) or simple accessibility, never both.
+    // SecAccessControl embeds the accessibility level, so kSecAttrAccessible is not needed.
+    if let accessControl = accessControl {
+      let secAccessControl = try accessControl.createSecAccessControl()
+      query[KeychainSwiftConstants.accessControl] = secAccessControl
+    } else {
+      let accessible = access?.value ?? KeychainSwiftAccessOptions.defaultOption.value
+      query[KeychainSwiftConstants.accessible] = accessible
+    }
       
     addAccessGroupWhenPresent(&query)
     addSynchronizableIfRequired(&query, addingItems: true)
@@ -110,16 +143,22 @@ open class KeychainSwift: @unchecked Sendable {
 
   - parameter key: Key under which the value is stored in the keychain.
   - parameter value: Boolean to be written to the keychain.
-  - parameter withAccess: Value that indicates when your app needs access to the value in the keychain item. By default the .AccessibleWhenUnlocked option is used that permits the data to be accessed only while the device is unlocked by the user.
+  - parameter withAccess: Value that indicates when your app needs access to the value in the keychain item.
+    By default the `.accessibleWhenUnlocked` option is used that permits the data to be accessed only
+    while the device is unlocked by the user. Mutually exclusive with `withAccessControl`.
+  - parameter withAccessControl: Access control configuration requiring user authentication
+    (e.g., biometrics or passcode) to read the item. Mutually exclusive with `withAccess`.
+    When provided, `kSecAttrAccessControl` is used instead of `kSecAttrAccessible`.
 
   */
   open func set(_ value: Bool, forKey key: String,
-    withAccess access: KeychainSwiftAccessOptions? = nil) throws {
+    withAccess access: KeychainSwiftAccessOptions? = nil,
+    withAccessControl accessControl: KeychainSwiftAccessControl? = nil) throws {
   
     let bytes: [UInt8] = value ? [1] : [0]
     let data = Data(bytes)
 
-    try set(data, forKey: key, withAccess: access)
+    try set(data, forKey: key, withAccess: access, withAccessControl: accessControl)
   }
 
   /**
@@ -127,11 +166,22 @@ open class KeychainSwift: @unchecked Sendable {
   Retrieves the text value from the keychain that corresponds to the given key.
   
   - parameter key: The key that is used to read the keychain item.
+  - parameter authenticationPrompt: Optional text displayed in the system biometric/passcode
+    prompt when reading an access-controlled item. If nil, no prompt text is added.
+  - parameter authenticationContext: Optional pre-authenticated `LAContext` (from LocalAuthentication)
+    to reuse a previous authentication. Pass this to avoid repeated biometric prompts when
+    reading multiple protected items. Must be an `LAContext` instance.
   - returns: The text value from the keychain. Returns nil if unable to read the item.
   
+  - Important: If the item has access control, this call blocks the calling thread while the
+    system authentication UI is displayed. Call from a background thread, not the main thread.
+  
   */
-  open func get(_ key: String) throws -> String? {
-    if let data = try getData(key) {
+  open func get(_ key: String,
+                authenticationPrompt: String? = nil,
+                authenticationContext: AnyObject? = nil) throws -> String? {
+    if let data = try getData(key, authenticationPrompt: authenticationPrompt,
+                              authenticationContext: authenticationContext) {
       
       if let currentString = String(data: data, encoding: .utf8) {
         return currentString
@@ -149,10 +199,24 @@ open class KeychainSwift: @unchecked Sendable {
   
   - parameter key: The key that is used to read the keychain item.
   - parameter asReference: If true, returns the data as reference (needed for things like NEVPNProtocol).
+  - parameter authenticationPrompt: Optional text displayed in the system biometric/passcode
+    prompt when reading an access-controlled item. If nil, no prompt text is added.
+  - parameter authenticationContext: Optional pre-authenticated `LAContext` (from LocalAuthentication)
+    to reuse a previous authentication. Pass this to avoid repeated biometric prompts when
+    reading multiple protected items. Must be an `LAContext` instance.
   - returns: The text value from the keychain. Returns nil if unable to read the item.
   
+  - Important: If the item has access control, this call blocks the calling thread while the
+    system authentication UI is displayed. Call from a background thread, not the main thread.
+  - Throws: `KeychainError.userCanceled` if the user dismisses the authentication prompt.
+    `KeychainError.authFailed` if authentication fails.
+    `KeychainError.interactionNotAllowed` if the app cannot display the authentication UI
+    (e.g., while in the background).
+  
   */
-  open func getData(_ key: String, asReference: Bool = false) throws -> Data? {
+  open func getData(_ key: String, asReference: Bool = false,
+                    authenticationPrompt: String? = nil,
+                    authenticationContext: AnyObject? = nil) throws -> Data? {
     // The lock prevents the code to be run simultaneously
     // from multiple threads which may result in crashing
     lock.lock()
@@ -170,6 +234,16 @@ open class KeychainSwift: @unchecked Sendable {
       query[KeychainSwiftConstants.returnReference] = kCFBooleanTrue
     } else {
       query[KeychainSwiftConstants.returnData] =  kCFBooleanTrue
+    }
+
+    // Add authentication parameters for access-controlled items.
+    // These are only used when the item was stored with SecAccessControl.
+    if let prompt = authenticationPrompt {
+      query[KeychainSwiftConstants.useOperationPrompt] = prompt
+    }
+
+    if let context = authenticationContext {
+      query[KeychainSwiftConstants.useAuthenticationContext] = context
     }
     
     addAccessGroupWhenPresent(&query)
@@ -194,11 +268,19 @@ open class KeychainSwift: @unchecked Sendable {
   Retrieves the boolean value from the keychain that corresponds to the given key.
 
   - parameter key: The key that is used to read the keychain item.
+  - parameter authenticationPrompt: Optional text displayed in the system biometric/passcode
+    prompt when reading an access-controlled item. If nil, no prompt text is added.
+  - parameter authenticationContext: Optional pre-authenticated `LAContext` (from LocalAuthentication)
+    to reuse a previous authentication. Pass this to avoid repeated biometric prompts when
+    reading multiple protected items. Must be an `LAContext` instance.
   - returns: The boolean value from the keychain. Returns nil if unable to read the item.
 
   */
-  open func getBool(_ key: String) throws -> Bool? {
-    guard let data = try getData(key) else { return nil }
+  open func getBool(_ key: String,
+                    authenticationPrompt: String? = nil,
+                    authenticationContext: AnyObject? = nil) throws -> Bool? {
+    guard let data = try getData(key, authenticationPrompt: authenticationPrompt,
+                                 authenticationContext: authenticationContext) else { return nil }
     guard let firstBit = data.first else { return nil }
     return firstBit == 1
   }
@@ -231,6 +313,10 @@ open class KeychainSwift: @unchecked Sendable {
     lock.lock()
     defer { lock.unlock() }
       
+    // Note: returnData is intentionally included. On macOS, it filters results to only
+    // items this process can access. For access-controlled items with kSecMatchLimitAll,
+    // items requiring interactive authentication are silently skipped rather than triggering
+    // individual biometric prompts.
     var query: [String: Any] = [
       KeychainSwiftConstants.klass : kSecClassGenericPassword,
       KeychainSwiftConstants.returnData : true,
@@ -334,6 +420,89 @@ open class KeychainSwift: @unchecked Sendable {
   func throwIfFailed(_ status: OSStatus) throws {
     if status != noErr {
       throw KeychainError(status)
+    }
+  }
+}
+
+// MARK: - Async Wrappers
+
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+extension KeychainSwift {
+
+  /**
+   Asynchronously retrieves the text value from the keychain that corresponds to the given key.
+
+   This dispatches the keychain read to a background thread, preventing the biometric/passcode
+   system UI from blocking the main thread or the Swift concurrency cooperative thread pool.
+
+   - parameter key: The key that is used to read the keychain item.
+   - parameter authenticationPrompt: Optional text displayed in the system biometric/passcode prompt.
+   - returns: The text value from the keychain, or nil if the item was not found.
+   - throws: `KeychainError.userCanceled` if the user dismisses the authentication prompt.
+  */
+  public func getAsync(_ key: String,
+                     authenticationPrompt: String? = nil) async throws -> String? {
+    try await withCheckedThrowingContinuation { continuation in
+      DispatchQueue.global(qos: .userInitiated).async {
+        do {
+          let value = try self.get(key, authenticationPrompt: authenticationPrompt)
+          continuation.resume(returning: value)
+        } catch {
+          continuation.resume(throwing: error)
+        }
+      }
+    }
+  }
+
+  /**
+   Asynchronously retrieves data from the keychain that corresponds to the given key.
+
+   This dispatches the keychain read to a background thread, preventing the biometric/passcode
+   system UI from blocking the main thread or the Swift concurrency cooperative thread pool.
+
+   - parameter key: The key that is used to read the keychain item.
+   - parameter asReference: If true, returns the data as reference (needed for NEVPNProtocol).
+   - parameter authenticationPrompt: Optional text displayed in the system biometric/passcode prompt.
+   - returns: The data from the keychain, or nil if the item was not found.
+   - throws: `KeychainError.userCanceled` if the user dismisses the authentication prompt.
+  */
+  public func getDataAsync(_ key: String, asReference: Bool = false,
+                         authenticationPrompt: String? = nil) async throws -> Data? {
+    try await withCheckedThrowingContinuation { continuation in
+      DispatchQueue.global(qos: .userInitiated).async {
+        do {
+          let data = try self.getData(key, asReference: asReference,
+                                      authenticationPrompt: authenticationPrompt)
+          continuation.resume(returning: data)
+        } catch {
+          continuation.resume(throwing: error)
+        }
+      }
+    }
+  }
+
+  /**
+   Asynchronously retrieves a boolean value from the keychain that corresponds to the given key.
+
+   This dispatches the keychain read to a background thread, preventing the biometric/passcode
+   system UI from blocking the main thread or the Swift concurrency cooperative thread pool.
+
+   - parameter key: The key that is used to read the keychain item.
+   - parameter authenticationPrompt: Optional text displayed in the system biometric/passcode prompt.
+   - returns: The boolean value from the keychain, or nil if the item was not found.
+   - throws: `KeychainError.userCanceled` if the user dismisses the authentication prompt.
+  */
+  public func getBoolAsync(_ key: String,
+                         authenticationPrompt: String? = nil) async throws -> Bool? {
+    try await withCheckedThrowingContinuation { continuation in
+      DispatchQueue.global(qos: .userInitiated).async {
+        do {
+          let value = try self.getBool(key, authenticationPrompt: authenticationPrompt)
+          continuation.resume(returning: value)
+        } catch {
+          continuation.resume(throwing: error)
+        }
+      }
     }
   }
 }
